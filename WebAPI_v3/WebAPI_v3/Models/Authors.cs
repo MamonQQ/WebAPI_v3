@@ -5,7 +5,8 @@ namespace WebAPI_v3.Models
     public class Authors
     {
         [Key]
-        public int Id { get; set; }
+        public int AuthorID { get; set; }
         public string FullName { get; set; }
+        public List<Book_Author> Author { get; set; }
     }
 }

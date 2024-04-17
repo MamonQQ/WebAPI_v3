@@ -1,8 +1,14 @@
-﻿namespace WebAPI_v3.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebAPI_v3.Models
 {
     public class Book_Author
     {
-        public int Id { get; set; }
+        [Key]
+        public int ID { get; set; }
+        public int AuthorID { get; set; }
+        public int BooksID { get; set; }
 
+        public Authors Author { get; set; }
     }
 }
