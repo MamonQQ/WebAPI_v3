@@ -13,8 +13,8 @@ namespace WebAPI_v3.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly dbcontext _dbcontext;
-        public BooksController(dbcontext dbcontext)
+        private readonly AppDbContext _dbcontext;
+        public BooksController(AppDbContext dbcontext)
         {
             _dbcontext = dbcontext;
         }

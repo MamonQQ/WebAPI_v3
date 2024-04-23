@@ -7,8 +7,8 @@ namespace WebAPI_v3.Models
         [Key]
         public int ID { get; set; }
         public int AuthorID { get; set; }
-        public int BooksID { get; set; }
-
+        public int BookID { get; set; }
+        public Book Book { get; set; }
         public Authors Author { get; set; }
     }
 }

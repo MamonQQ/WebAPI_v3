@@ -16,7 +16,8 @@ namespace WebAPI_v3.Models
         public DateTime DateAdded { get; set; }
 
 
-        public Publishers Publishers { get; set; }
+        public int PublishersID { get; set; }
+        public Publishers Publishers {  set; get; }
         public List<Book_Author> Book_Authors { get; set; }
 
     }
