@@ -5,7 +5,7 @@ namespace WebAPI_v3.Models
     public class Book
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public bool isRead { get; set; }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WebAPI_v3.Data;
 using WebAPI_v3.Models;
 using WebAPI_v3.Models.DTO;
+using WebAPI_v3.Repositories;
 
 namespace WebAPI_v3.Controllers
 {
@@ -12,18 +13,21 @@ namespace WebAPI_v3.Controllers
     public class BookController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
+        private readonly IBookRepository _bookRepository;
         public BookController(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-        }
+            _bookRepository = _bookRepository;        }
         [HttpGet("get-all-books")]
         public IActionResult GetAll()
         {
+            var allBooks = _bookRepository.GetAllBooks();
+            return Ok(allBooks);
             //var allBooksDomain = _dbContext.Books.ToList();
             var allBooksDomain = _dbContext.Books;
             var allBooksDTO = allBooksDomain.Select(Books => new BookWithAuthorAndPublisherDTO(){
                 
-                Id = Books.ID,
+                Id = Books.Id,
                 Title = Books.Title,
                 Description = Books.Description,
                 IsRead = Books.isRead,
@@ -40,8 +44,11 @@ namespace WebAPI_v3.Controllers
         [Route("get-book-by-id/{id}")]
         public IActionResult GetBookById([FromRoute] int id)
         {
+            var bookWithIdDTO = _bookRepository.GetBookById(id);
+            return Ok(bookWithIdDTO);
+            /*
             //get book domain model from db
-            var bookWithDomain = _dbContext.Books.Where(n => n.ID == id);
+            var bookWithDomain = _dbContext.Books.Where(n => n.Id == id);
             if (bookWithDomain == null)
             {
                 return NotFound();
@@ -49,7 +56,7 @@ namespace WebAPI_v3.Controllers
             //map domain model to DTO
             var bookWithIdDTO = bookWithDomain.Select(Books => new BookWithAuthorAndPublisherDTO
             {
-                Id = Books.ID,
+                Id = Books.Id,
                 Title = Books.Title,
                 Description = Books.Description,
                 IsRead = Books.isRead,
@@ -61,10 +68,14 @@ namespace WebAPI_v3.Controllers
                 AuthorNames = Books.Book_Authors.Select(n => n.Author.FullName).ToList()
             });
             return Ok(bookWithIdDTO);
+            */
         }
         [HttpPost("AddBook")]
         public IActionResult Addbook([FromBody] AddBookRequestDTO addBookRequestDTO)
         {
+            var bookAdd = _bookRepository.AddBook(addBookRequestDTO);
+            return Ok(bookAdd);
+            /*
             //map DTO to domain model
             var bookDomainModel = new Book
             {
@@ -85,7 +96,7 @@ namespace WebAPI_v3.Controllers
             {
                 var bookAuthor = new Book_Author()
                 {
-                    BookID = bookDomainModel.ID,
+                    BookID = bookDomainModel.Id,
                     AuthorID = id
                 };
                 _dbContext.Book_Authors.Add(bookAuthor);
@@ -93,13 +104,18 @@ namespace WebAPI_v3.Controllers
             }
 
             return Ok();
+            */
         }
+            
         //update book by id
         [HttpPut("update-book-by-id/{id}")]
         public IActionResult UpdateBookById([FromRoute] int id, [FromBody] AddBookRequestDTO BookDTO)
         {
+            var updateBook = _bookRepository.UpdateBookById(id, BookDTO);
+            return Ok(updateBook);
+            /*
             //get book domain model from db
-            var bookDomain = _dbContext.Books.Where(n => n.ID == id).FirstOrDefault();
+            var bookDomain = _dbContext.Books.Where(n => n.Id == id).FirstOrDefault();
             if (bookDomain == null)
             {
                 return NotFound();
@@ -128,20 +144,24 @@ namespace WebAPI_v3.Controllers
             {
                 var bookAuthor = new Book_Author()
                 {
-                    BookID = bookDomain.ID,
+                    BookID = bookDomain.Id,
                     AuthorID = authorId
                 };
                 _dbContext.Book_Authors.Add(bookAuthor);
                 _dbContext.SaveChanges();
             }
             return Ok(BookDTO);
+            */
         }
         //delete book by id
         [HttpDelete("delete-book-by-id/{id}")]
         public IActionResult DeleteBookById([FromRoute] int id)
         {
+            var deleteBook = _bookRepository.DeleteBookById(id);
+            return Ok(deleteBook);
+            /*
             //get book domain model from db
-            var bookDomain = _dbContext.Books.Where(n => n.ID == id).FirstOrDefault();
+            var bookDomain = _dbContext.Books.Where(n => n.Id == id).FirstOrDefault();
             if (bookDomain != null)
             {
                 //delete book
@@ -150,6 +170,7 @@ namespace WebAPI_v3.Controllers
             }
 
             return Ok();
+            */
         }
     }
 
