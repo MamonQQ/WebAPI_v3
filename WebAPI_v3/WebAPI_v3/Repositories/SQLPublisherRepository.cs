@@ -2,8 +2,7 @@
 using WebAPI_v3.Data;
 using WebAPI_v3.Models;
 using WebAPI_v3.Models.DTO;
-using WebAPI_v3.Repositories;
-namespace WebAPI_simple.Repositories
+namespace WebAPI_v3.Repositories
 {
     public class SQLPublisherRepository : IPublisherRepository
     {

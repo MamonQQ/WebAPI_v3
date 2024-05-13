@@ -1,17 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using WebAPI_v3.CustomActionFilter;
 using WebAPI_v3.Data;
 using WebAPI_v3.Models;
 using WebAPI_v3.Models.DTO;
 using WebAPI_v3.Repositories;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebAPI_v3.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
+
     public class BookController : ControllerBase
     {
+
         private readonly AppDbContext _dbContext;
         private readonly IBookRepository _bookRepository;
         public BookController(AppDbContext dbContext)
@@ -19,10 +26,13 @@ namespace WebAPI_v3.Controllers
             _dbContext = dbContext;
             _bookRepository = _bookRepository;        }
         [HttpGet("get-all-books")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery,[FromQuery] string? sortBy, [FromQuery] bool isAscending,
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100)
         {
-            var allBooks = _bookRepository.GetAllBooks();
+            // su dung reposity pattern  
+            var allBooks = _bookRepository.GetAllBooks(filterOn, filterQuery, sortBy,isAscending, pageNumber, pageSize);
             return Ok(allBooks);
+            /*
             //var allBooksDomain = _dbContext.Books.ToList();
             var allBooksDomain = _dbContext.Books;
             var allBooksDTO = allBooksDomain.Select(Books => new BookWithAuthorAndPublisherDTO(){
@@ -39,6 +49,7 @@ namespace WebAPI_v3.Controllers
                 AuthorNames = Books.Book_Authors.Select(n => n.Author.FullName).ToList()
             }).ToList();
             return Ok(allBooksDTO);
+            */
         }
         [HttpGet]
         [Route("get-book-by-id/{id}")]
@@ -172,6 +183,56 @@ namespace WebAPI_v3.Controllers
             return Ok();
             */
         }
+
+        [HttpPost("and-book")]
+        [ValidateModel]
+        [Authorize(Roles = "Write")]
+        public IActionResult AddBook([FromBody] AddBookRequestDTO addBookRequestDTO)
+        {
+            //validate request 
+            if (!ValidateAddBook(addBookRequestDTO))
+            {
+                return BadRequest(ModelState);
+            }
+            // before add data 
+            if (ModelState.IsValid)
+            {
+                var bookAdd = _bookRepository.AddBook(addBookRequestDTO);
+                return Ok(bookAdd);
+            }
+            return BadRequest(ModelState);
+
+        }
+        
+        #region Private methods 
+        private bool ValidateAddBook(AddBookRequestDTO addBookRequestDTO)
+        {
+            if (addBookRequestDTO == null)
+            {
+                ModelState.AddModelError(nameof(addBookRequestDTO), $"Please add book data"); 
+                return false;
+            }
+            // kiem tra Description NotNull 
+            if (string.IsNullOrEmpty(addBookRequestDTO.Description))
+            {
+                ModelState.AddModelError(nameof(addBookRequestDTO.Description),$"{nameof(addBookRequestDTO.Description)} cannot be null");
+            }
+            // kiem tra rating (0,5) 
+            if (addBookRequestDTO.Rate < 0 || addBookRequestDTO.Rate > 5)
+            {
+                ModelState.AddModelError(nameof(addBookRequestDTO.Rate),$"{nameof(addBookRequestDTO.Rate)} cannot be less than 0 and more than 5");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
+
+       
     }
 
 }
