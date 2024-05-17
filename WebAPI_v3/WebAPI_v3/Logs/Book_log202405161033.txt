@@ -1,0 +1,11 @@
+2024-05-16 10:33:48.250 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5150/api/User/Login - application/json 90
+2024-05-16 10:33:48.265 +07:00 [INF] Executing endpoint 'WebAPI_v3.Controllers.UserController.Login (WebAPI_v3)'
+2024-05-16 10:33:48.289 +07:00 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(WebAPI_v3.Models.DTO.RegisterRequestDTO) on controller WebAPI_v3.Controllers.UserController (WebAPI_v3).
+2024-05-16 10:33:50.638 +07:00 [INF] Executed DbCommand (50ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2024-05-16 10:33:50.875 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2024-05-16 10:33:50.883 +07:00 [INF] Executed action WebAPI_v3.Controllers.UserController.Login (WebAPI_v3) in 2586.4277ms
+2024-05-16 10:33:50.886 +07:00 [INF] Executed endpoint 'WebAPI_v3.Controllers.UserController.Login (WebAPI_v3)'
+2024-05-16 10:33:50.893 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5150/api/User/Login - 400 null text/plain; charset=utf-8 2643.3774ms

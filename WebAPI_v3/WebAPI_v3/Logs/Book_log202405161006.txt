@@ -1,0 +1,17 @@
+2024-05-16 10:06:35.097 +07:00 [INF] User profile is available. Using 'C:\Users\PC\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-05-16 10:06:35.905 +07:00 [INF] Now listening on: http://localhost:5150
+2024-05-16 10:06:35.911 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-05-16 10:06:35.914 +07:00 [INF] Hosting environment: Development
+2024-05-16 10:06:35.916 +07:00 [INF] Content root path: C:\github\WebAPI_v3\WebAPI_v3\WebAPI_v3
+2024-05-16 10:06:37.024 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5150/swagger/index.html - null null
+2024-05-16 10:06:37.534 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5150/swagger/index.html - 200 null text/html;charset=utf-8 525.8187ms
+2024-05-16 10:06:38.433 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5150/_vs/browserLink - null null
+2024-05-16 10:06:38.434 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5150/_framework/aspnetcore-browser-refresh.js - null null
+2024-05-16 10:06:38.444 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5150/_framework/aspnetcore-browser-refresh.js - 200 13754 application/javascript; charset=utf-8 10.556ms
+2024-05-16 10:06:38.502 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5150/_vs/browserLink - 200 null text/javascript; charset=UTF-8 69.6583ms
+2024-05-16 10:06:38.598 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5150/swagger/v1/swagger.json - null null
+2024-05-16 10:06:38.870 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5150/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 272.0358ms
+2024-05-16 10:06:39.293 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5150/swagger/highLightTitle.png - null null
+2024-05-16 10:06:39.307 +07:00 [WRN] Failed to determine the https port for redirect.
+2024-05-16 10:06:39.450 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5150/swagger/highLightTitle.png - 404 0 null 157.1666ms
+2024-05-16 10:06:39.458 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5150/swagger/highLightTitle.png, Response status code: 404
